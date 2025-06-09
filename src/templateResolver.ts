@@ -41,9 +41,6 @@ export interface TypeSafeTemplateMap {
 const templates = new Map<string, TemplateDefinition>();
 const logger = getLogger();
 
-/**
- * Type-safe template registration
- */
 export function registerTemplate<TProps extends Record<string, any>>(
   definition: TemplateDefinition<TProps>
 ): void {
@@ -69,9 +66,6 @@ export function registerTemplate<TProps extends Record<string, any>>(
   });
 }
 
-/**
- * Type-safe template registration with explicit typing
- */
 export function registerTypedTemplate<K extends keyof TypeSafeTemplateMap>(
   name: K,
   definition: Omit<TypeSafeTemplateMap[K], "name">
@@ -82,16 +76,10 @@ export function registerTypedTemplate<K extends keyof TypeSafeTemplateMap>(
   } as TemplateDefinition);
 }
 
-/**
- * Bulk template registration
- */
 export function registerTemplates(definitions: TemplateDefinition[]): void {
   definitions.forEach(registerTemplate);
 }
 
-/**
- * Get template with type safety
- */
 export function getTemplate<TProps = any>(
   name: string
 ): React.ComponentType<TProps> {
@@ -107,18 +95,12 @@ export function getTemplate<TProps = any>(
   return definition.component as React.ComponentType<TProps>;
 }
 
-/**
- * Get template definition
- */
 export function getTemplateDefinition(
   name: string
 ): TemplateDefinition | undefined {
   return templates.get(name);
 }
 
-/**
- * Get template subject with enhanced fallbacks
- */
 export function getTemplateSubject(
   name: string,
   props: Record<string, any>
@@ -157,16 +139,10 @@ export function getTemplateSubject(
   return `Email notification`;
 }
 
-/**
- * Get all registered templates
- */
 export function getAvailableTemplates(): string[] {
   return Array.from(templates.keys());
 }
 
-/**
- * Get templates by category
- */
 export function getTemplatesByCategory(): Record<string, TemplateDefinition[]> {
   const categorized: Record<string, TemplateDefinition[]> = {};
 
@@ -181,9 +157,6 @@ export function getTemplatesByCategory(): Record<string, TemplateDefinition[]> {
   return categorized;
 }
 
-/**
- * Validate template props against schema
- */
 export function validateTemplateProps(
   templateName: string,
   props: Record<string, any>
@@ -223,16 +196,10 @@ export function validateTemplateProps(
   return { valid: errors.length === 0, errors };
 }
 
-/**
- * Clear all templates (useful for testing)
- */
 export function clearTemplates(): void {
   templates.clear();
 }
 
-/**
- * Get template registry info
- */
 export function getRegistryInfo() {
   const categories = getTemplatesByCategory();
 
